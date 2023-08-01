@@ -9,6 +9,8 @@ alarme = "alarm.mp3"
 
 alarme_tocando = False
 
+index_webcam = 0
+
 def tocar_alarme():
     global alarme_tocando
     alarme_tocando = True
@@ -27,7 +29,7 @@ def eye_aspect_ratio(eye):
     ear = (A + B) / (2.0 * C)
     return ear
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(index_webcam)
 
 hog_face_detector = dlib.get_frontal_face_detector()
 dlib_facelandmark = dlib.shape_predictor("BancoDeRostos\shape_predictor_68_face_landmarks.dat")
