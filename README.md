@@ -12,6 +12,12 @@ O programa em Python tem como objetivo detectar fadiga em motoristas durante a c
 
 4) Feito tudo isso, basta rodar o código
 
+# Observações
+
+1) Caso o código não esteja rodando, tente trocar o valor da variável "index_webcam". Mude para números de 1 para cima.
+
+2) Este projeto é interessante para usar em conjunto com um Raspberry Pi, instalando-o de fato no seu carro.
+   
 
 
    
