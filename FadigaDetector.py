@@ -5,17 +5,15 @@ from scipy.spatial import distance as dist
 import numpy as np
 import threading
 
-alarme = "alarm.mp3"
-
-alarme_tocando = False
-
+alarm_sound = "alarm.mp3"
+alarm_ring = False
 index_webcam = 0
 
-def tocar_alarme():
-    global alarme_tocando
-    alarme_tocando = True
-    playsound.playsound(alarme)
-    alarme_tocando = False
+def play_alarm(sound_file):
+    global alarm_ring
+    alarm_ring = True
+    playsound.playsound(sound_file)
+    alarm_ring = False
 
 def eye_aspect_ratio(eye):
     # Calcula a distância euclidiana entre os pontos verticais dos olhos
@@ -40,7 +38,7 @@ right_eye_indices = list(range(42, 48))
 
 # Variáveis para controlar o tempo
 closed_counter = 0
-closed_threshold = 2 * 30  # 3 segundos (considerando 30 quadros por segundo)
+closed_threshold = 2 * 10  # 3 segundos (considerando 30 quadros por segundo)
 
 while True:
 
@@ -75,9 +73,9 @@ while True:
         # Verifica se a razão de aspecto do olho esquerdo ou direito é menor que um valor de limite, se sim toca o alarme
         if left_ear < 0.2 or right_ear < 0.2:
             closed_counter += 1
-            if closed_counter > closed_threshold and not alarme_tocando:
-                # Start the alarm sound in a separate thread
-                alarm_thread = threading.Thread(target=tocar_alarme)
+            if closed_counter > closed_threshold and not alarm_ring:
+                # Inicia o som do alarme em uma thread separada
+                alarm_thread = threading.Thread(target=play_alarm, args=(alarm_sound,))
                 alarm_thread.start()
         else:
             closed_counter = 0
@@ -88,6 +86,6 @@ while True:
     if key == 27:
         break
 
-# Release the camera and destroy all windows
+# Fecha tudo
 cap.release()
 cv2.destroyAllWindows()
